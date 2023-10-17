@@ -1,6 +1,6 @@
 {
-  "name": "electron-webview",
-  "productName": "Electron webview",
+  "name": "gnostr-webview",
+  "productName": "gnostr-webview",
   "version": "1.0.0",
   "description": "A simple Electron webview application",
   "main": "main.js",
