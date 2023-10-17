@@ -1,5 +1,6 @@
 // Electron
 const { app, Menu } = require("electron");
+const { EventEmitter } = require("events").EventEmitter.defaultMaxListeners = Infinity;
 
 app.whenReady().then(() => {
   // Main window
