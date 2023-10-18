@@ -8,9 +8,11 @@ readme:
 package-mac-universal:
 	npx electron-packager . --overwrite --platform=darwin --arch=universal  --icon=assets/icons/mac/icon.icns --prune=false --out=dist/darwin/universal
 package-mac-x64:
-	npx electron-packager . --overwrite --platform=darwin --arch=x64  --icon=assets/icons/mac/icon.icns --prune=false --out=dist/darwin/x64
+	npx electron-packager . --overwrite --platform=darwin --arch=x64        --icon=assets/icons/mac/icon.icns --prune=false --out=dist/darwin/x64
 package-mac-arm64:
-	npx electron-packager . --overwrite --platform=darwin --arch=arm64  --icon=assets/icons/mac/icon.icns --prune=false --out=dist/darwin/arm64
+	npx electron-packager . --overwrite --platform=darwin --arch=arm64      --icon=assets/icons/mac/icon.icns --prune=false --out=dist/darwin/arm64
+package-mac:
+	npx electron-packager . --overwrite --platform=darwin                   --icon=assets/icons/mac/icon.icns --prune=false --out=dist/darwin
 package-win:
 	npx electron-packager . --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --prune=false --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName="Electron Webview"
 package-linux:
