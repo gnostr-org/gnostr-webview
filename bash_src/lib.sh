@@ -5,7 +5,11 @@ onwindow_fn() {
 }
 
 onbody_fn() {
-    echo "hello from onbody_fn   $(pwd) - LIB_SCRIPT_DIR $LIB_SCRIPT_DIR"
+    echo "onbody_fn   $(pwd)"
+    echo "onbody_fn   LIB_SCRIPT_DIR=$LIB_SCRIPT_DIR"
+    $LIB_SCRIPT_DIR/gnostr-git-sh-setup
+    $LIB_SCRIPT_DIR/gnostr-git-instaweb ##--start ##\
+    ## restart the server every time the app starts?
 }
 
 hello_fn() {

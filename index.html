@@ -15,7 +15,8 @@
   </head>
   <body onload="ipc.send('call-bash-function-onbody_fn', 'hello onbody!!')">
 
-    <h1>bash exec function examples!</h1>
+    </script>
+    <div id="demo">DEMO</div>
     <!-- Topbar -->
     <div id="controls">
       <button id="home" title="Go Home">Home</button>
@@ -25,6 +26,15 @@
     </div>
     <!-- End topbar -->
 
+    <!-- Webview -->
+
+    <webview
+      autosize="on"
+      src="http://0.0.0.0:1234"
+      id="webview"
+      data-home="http://0.0.0.0:1234"
+    ></webview>
+
     <h2 id="hello-header">...</h2>
     <h2 id="hello-header2">...</h2>
 
@@ -32,7 +42,6 @@
       var ipc = require('electron').ipcRenderer;
       document.addEventListener('load', function(){
         ipc.send('call-bash-function-onbody_fn', 'onbody_fn');
-        console.log('body clicked');
       });
 
       window.addEventListener('load', function(){
@@ -44,6 +53,7 @@
       // named 'hello-from-renderer' to the backend process
       var helloButton = document.getElementById('hello-button');
       helloButton.addEventListener('click', function(){
+        document.getElementById("demo").innerHTML = "Page location is " + window.location.href;
         ipc.send('call-bash-function-hello_fn', 'hello');
         console.log('hello-button clicked');
       });
@@ -72,14 +82,6 @@
       });
 
      </script
-    <!-- Webview -->
-
-    <webview
-      autosize="on"
-      src="https://www.github.com"
-      id="webview"
-      data-home="https://github.com"
-    ></webview>
 
     <!-- HTML -->
     <!--
