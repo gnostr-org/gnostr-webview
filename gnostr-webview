@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+gnostr-set-relays 2>/tmp/gnostr-webview.log || echo
+(echo `pwd`) & clear && \
+# gnostr-webview sub-shell process
+#
+#
+NVM_VERSION=v18.17.1
+touch .nvmrc
+echo $NVM_VERSION > .nvmrc
+if ! grep -q "$NVM_VERSION" .nvmrc; then echo "$NVM_VERSION" > .nvmrc; fi;\
+touch .gitignore
+if ! grep -q ".nvmrc" .gitignore; then echo ".nvmrc" >> .gitignore; fi;\
+
+export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] >/dev/null && \. "$NVM_DIR/nvm.sh" >/dev/null && [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" && echo "gnostr-webview:nvm:node -v $NVM_VERSION" && nvm install $NVM_VERSION >/tmp/gnostr-webview.log 2>&1 && nvm use --silent 2>/tmp/gnostr-webview.log \
+
+(\
+
+if ! grep -q ".gnostr/webview" .gitignore; then echo ".gnostr/webview" >> .gitignore; fi;\
+
+mkdir -p .gnostr >/tmp/gnostr-webview.log;\
+[ ! -d .gnostr/webview ] && echo "gnostr-webview:git:installing .gnostr/webview"
+[ ! -d .gnostr/webview ] && git clone --depth 1 --branch master https://github.com/gnostr-org/gnostr-webview.git .gnostr/webview >/tmp/gnostr-webview.log 2>&1; \
+[   -d .gnostr/webview ] && echo "gnostr-webview:git:updating .gnostr/webview"
+[   -d .gnostr/webview ] && cd .gnostr/webview && git reset --hard 2>/tmp/gnostr-webview.log && git pull -f origin master 2>/tmp/gnostr-webview.log && echo ".gnostr/webview" >> .gitignore >/tmp/gnostr-webview.log 2>&1 &&  make run -k > /tmp/gnostr-webview.log 2>&1;\
+)#2>/tmp/gnostr-webview.log;
+
