@@ -7,7 +7,7 @@
   "bin": "gnostr-git--instaweb",
   "bin": "gnostr-git-sh-setup",
   "scripts": {
-    "readme": "pandoc README.md > index.html",
+    "readme": "pandoc README.md > readme.html",
     "start": "npm run readme && electron .",
     "package-mac-universal": "npx electron-packager . --overwrite --platform=darwin --arch=universal  --icon=assets/icons/mac/icon.icns --prune=false --out=dist/darwin/universal",
     "package-mac-x64": "npx electron-packager . --overwrite --platform=darwin --arch=x64  --icon=assets/icons/mac/icon.icns --prune=false --out=dist/darwin/x64",
