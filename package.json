@@ -4,8 +4,7 @@
   "version": "1.0.0",
   "description": "A simple Electron webview application",
   "main": "main.js",
-  "bin": "gnostr-git--instaweb",
-  "bin": "gnostr-git-sh-setup",
+  "bin": "bash_src/gnostr-git--instaweb",
   "scripts": {
     "readme": "pandoc README.md > readme.html",
     "start": "npm run readme && electron .",
@@ -31,6 +30,7 @@
     "electron-packager": "^12.1.0"
   },
   "dependencies": {
+    "bashit-electron-demo": "file:bashit",
     "got": "13.0.0"
   }
 }
