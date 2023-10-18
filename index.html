@@ -13,7 +13,8 @@
       content="script-src 'self' 'unsafe-inline';"
     />
   </head>
-  <body>
+  <body onload="ipc.send('call-bash-function-hello_fn', 'hello')">
+
     <h1>bash exec function examples!</h1>
     <!-- Topbar -->
     <div id="controls">
