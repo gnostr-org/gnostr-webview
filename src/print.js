@@ -5,7 +5,7 @@ ipcMain.handle("print", async (event, arg) => {
   printWindow.loadURL(arg);
 
   printWindow.webContents.on("did-finish-load", () => {
+    // repurpose the print button for now
     // printWindow.webContents.print();
-    console.log("src/print.js:bypass:printWindow.webContents.print();")
   });
 });

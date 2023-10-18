@@ -1,51 +1,101 @@
-// Electron
-const { app, Menu } = require("electron");
-const { EventEmitter } = require("events").EventEmitter.defaultMaxListeners = Infinity;
+const {app, BrowserWindow, ipcMain, Menu} = require('electron')
+const child_process = require('child_process').execFile;
 
-app.whenReady().then(() => {
+// Keep a global reference of the window object, if you don't, the window will
+// be closed automatically when the JavaScript object is garbage collected.
+let win
 
-  process.stdout.write('your output to command prompt console or node js\n');
-  process.stdout.write('\n');
+function createWindow () {
 
-  console.log("process.defaultApp=" + process.defaultApp);
-  console.log("process.isMainFrame=" + process.isMainFrame);
-  console.log("process.mas=" + process.mas);
-  console.log("process.resourcePath=" + process.resourcePath);
-  console.log("process.sandboxed=" + process.sandboxed);
-  // Main window
-  const window = require("./src/window");
-  mainWindow = window.createBrowserWindow(app);
+    // Create the browser window.
+    win = new BrowserWindow({width: 800, height: 600})
 
-  // Option 1: Uses Webtag and load a custom html file with external content
-  mainWindow.loadFile("index.html");
-  // mainWindow.loadURL(`file://${__dirname}/index.html`);
+    // and load the index.html of the app.
+    win.loadFile('index.html')
 
-  // Option 2: Load directly an URL if you don't need interface customization
-  //mainWindow.loadURL("https://github.com");
+    // Open the DevTools.
+    // win.webContents.openDevTools()
 
-  // Option 3: Uses BrowserView to load an URL
-  //const view = require("./src/view");
-  //view.createBrowserView(mainWindow);
+    // Emitted when the window is closed.
+    win.on('closed', () => {
+        // Dereference the window object, usually you would store windows
+        // in an array if your app supports multi windows, this is the time
+        // when you should delete the corresponding element.
+        win = null
+    })
+}
 
-  // Display Dev Tools
-  //mainWindow.openDevTools();
+function bashit_fn(sender, fnName) {
+    var executablePath = '/usr/bin/env'
+    var source_path = 'source ' + __dirname + '/bash_src/lib.sh; ' + fnName;
+    var parameters = [ 'bash', '-c', source_path ];
 
-  // Menu (for standard keyboard shortcuts)
-  const menu = require("./src/menu");
-  // if (process.argv[1] !== '--dev') return console.log("process.argv[1]",process.argv[1]);
-  // if (process.argv[2] !== '--dev') return console.log("process.argv[2]",process.argv[2]);
-  menu.append(new MenuItem({
-    label: 'MenuCommand',
-    accelerator: 'CommandOrControl+Shift+Z',
-    click: () => BrowserWindow.getFocusedWindow().toggleDevTools()
-  }));
-  const template = menu.createTemplate(app.name);
-  const builtMenu = Menu.buildFromTemplate(template);
-  Menu.setApplicationMenu(builtMenu);
+    child_process(executablePath, parameters, function(err, data) {
+        var msg = data.toString();
+        if (err) {
+            console.error(err);
+            msg += err;
+        }
+        var eventName = 'bash-function-' + fnName;
+        sender.send(eventName, msg);
+        console.log(msg);
+    });
+}
 
-  // Print function (if enabled)
-  require("./src/print");
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+function onwindow_fn(sender) {
+    bashit_fn(sender, 'onwindow_fn');
+}
+ipcMain.on('call-bash-function-window_fn', (event, arg) => {
+    onwindow_fn(event.sender);
 });
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+function onbody_fn(sender) {
+    bashit_fn(sender, 'onbody_fn');
+}
+ipcMain.on('call-bash-function-onbody_fn', (event, arg) => {
+    onbody_fn(event.sender);
+});
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+function hello_fn(sender) {
+    bashit_fn(sender, 'hello_fn');
+}
+ipcMain.on('call-bash-function-hello_fn', (event, arg) => {
+    hello_fn(event.sender);
+});
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+function hello_fn2(sender) {
+    bashit_fn(sender, 'hello_fn2');
+}
+ipcMain.on('call-bash-function-hello_fn2', (event, arg) => {
+    hello_fn2(event.sender);
+});
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+ipcMain.on("print", async (event, arg) => {
+  let printWindow = new BrowserWindow({ "auto-hide-menu-bar": true });
+  let instaweb = "http://127.0.0.1:1234";
+  printWindow.loadURL(instaweb);
+
+  printWindow.webContents.on("did-finish-load", () => {
+    // repurpose the print button for now
+    // printWindow.webContents.print();
+  });
+});
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+// This method will be called when Electron has finished
+// initialization and is ready to create browser windows.
+// Some APIs can only be used after this event occurs.
+
+app.on('ready', createWindow)
+// app.on('ready', hello_fn2("app.on"))
 
 // Quit when all windows are closed.
 app.on("window-all-closed", () => {
@@ -53,3 +103,12 @@ app.on("window-all-closed", () => {
     app.quit();
   }
 });
+
+app.on('activate', () => {
+    // On macOS it's common to re-create a window in the app when the
+    // dock icon is clicked and there are no other windows open.
+    if (win === null) {
+        createWindow()
+    }
+})
+
