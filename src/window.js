@@ -10,6 +10,7 @@ exports.createBrowserWindow = () => {
     //titleBarStyle: 'hidden',
     //frame: false,
     backgroundColor: "#fff",
+    parent: "top",
     webPreferences: {
       nativeWindowOpen: true,
       devTools: true, // false if you want to remove dev tools access for the user

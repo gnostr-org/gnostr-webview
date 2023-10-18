@@ -1,3 +1,30 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/topbar.css" />
+    <link rel="stylesheet" href="assets/css/flex.css" />
+    <link rel="stylesheet" href="assets/css/data-flex.css" />
+    <link rel="stylesheet" href="assets/css/top_bar.css" />
+	 <!-- <link rel="stylesheet" href="assets/css/no-topbar.css"> -->
+	 <script defer src="assets/js/renderer.js"></script>
+	 <meta charset="UTF-8" />
+	 <title>Github</title>
+	 <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+  </head>
+
+<body>
+<!-- Topbar -->
+<div id="controls">
+<button id="home" title="Go Home">Home</button>
+<button id="print_button">Print</button>
+</div>
+<!-- End topbar -->
+
+<!-- Webview -->
+<webview autowidth="on" style="height:100px" src="http://0.0.0.0:1234" id="webview" data-home="http://0.0.0.0:1234"></webview>
+
+mainWindow.loadURL(`file://${__dirname}/index.html`);
+
 # Electron webview
 
 > Uses [Electron 25](https://releases.electronjs.org/release/v25.0.0)
@@ -15,7 +42,7 @@ Features:
 - MacOS, Windows and Linux executable with an app icon
 - DMG installer for Mac
 
-![Electron webview](screenshot.png)
+![Electron webview](assets/icons/png/512x512.png)
 
 This Electron webview application needs just these files:
 
@@ -165,8 +192,15 @@ if (document.querySelector("#print_button")) {
 
 ```html
   <!-- Webview -->
-  <webview autosize="on" src="https://www.github.com" data-home="https://github.com"></webview>
+  <webview autosize="on" style="height:100px" src="https://www.github.com" data-home="https://github.com"></webview>
 ```
+
+---
+
+<!-- Webview -->
+<webview autowidth="on" style="height:100px" src="http://0.0.0.0:1234" id="webview" data-home="http://0.0.0.0:1234"></webview>
+
+mainWindow.loadURL(`file://${__dirname}/index.html`);
 
 ## Application
 
@@ -291,3 +325,15 @@ Based on:
 ## License
 
 [MIT](LICENSE.md)
+
+    <!-- HTML -->
+    <!--
+    <h1>Hello world!</h1>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi, voluptatum
+      sint ullam minima molestias nam id autem perferendis! Cumque veritatis
+      sunt dolor quidem cum? Natus dolore ipsum illum numquam molestiae?
+    </p>
+    -->
+  </body>
+</html>

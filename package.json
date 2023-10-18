@@ -4,6 +4,8 @@
   "version": "1.0.0",
   "description": "A simple Electron webview application",
   "main": "main.js",
+  "bin": "gnostr-git--instaweb",
+  "bin": "gnostr-git-sh-setup",
   "scripts": {
     "readme": "pandoc README.md > index.html",
     "start": "npm run readme && electron .",
