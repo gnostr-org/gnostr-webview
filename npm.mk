@@ -18,5 +18,5 @@ package-win:
 package-linux:
 	npx electron-packager . --overwrite --platform=linux --arch=x64 --icon=assets/icons/png/1024x1024.png --prune=false --out=release-builds
 create-installer-mac:
-	npx electron-installer-dmg ./release-builds/Electron\ webview-darwin-arm64/Electron\ webview.app electron-webview --out=release-builds --overwrite --icon=assets/icons/mac/icon.icns
+	npx electron-installer-dmg  dist/darwin/x64/gnostr-webview-darwin-x64/gnostr-webview.app gnostr-webview --out=release-builds --overwrite --icon=assets/icons/mac/icon.icns
 
